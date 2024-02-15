@@ -47,13 +47,45 @@ addStatistic($topic, $procent, $dbConnection);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>report</title>
     <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
 </head>
 <body>
 <?php include "header.php"; ?>
 <section id="form-quiz">
     <section id="form-container">
-        <h1 id="report"><?php echo "you answered $procent procent of the questions correctly with total points: $totalPoints" ; ?></h1>
+        <h1 id="report"><?php echo "you answered $procent procent of the questions correctly with total points: $totalPoints" ; ?></h1>        
+        
+        <!-- Roger's Chart From W3schools animiert [x] und ohne flackern [x] ------ -->
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+        <script>
+            const yRichtig = <?php echo $procent ?>;
+            const yFalsch = 100 - <?= $procent ?>;
+            const xValues = ["Richtig", "Falsch"];
+            const yValues = [yRichtig, yFalsch];
+            const barColors = [
+                "#00ff00",
+                "#ff0000"
+            ];
+            
+            new Chart("myChart", {
+                type: "pie",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        backgroundColor: barColors,
+                        data: yValues
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: "Percent"
+                    }
+                }
+            });
+        </script>
+<!-- End of Roger's Chart -->
 
         <button class="nav-link" onclick="openPopup()">Newsletter</button>
             <section id="popup" class="popup" style="margin: 0; padding: 0;">
