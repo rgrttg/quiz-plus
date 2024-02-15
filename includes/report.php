@@ -80,8 +80,8 @@ const yFalsch = 100 - <?= $procent ?>;
 const xValues = ["Richtig", "Falsch"];
 const yValues = [yRichtig, yFalsch];
 const barColors = [
-  "#00ff00",
-  "#ff0000"
+  "#6b806f",
+  "#000532"
 ];
 
 new Chart("myChart", {
