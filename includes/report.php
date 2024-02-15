@@ -2,8 +2,8 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-include dirname(__DIR__) . "/utils/helper.php";
-include "db.php";
+// include dirname(__DIR__) . "/utils/helper.php";
+include "data-collector.php";
 // prettyPrint($_SESSION);
 // exit();
 $totalPoints = 0;
@@ -56,7 +56,7 @@ addStatistic($topic, $procent, $dbConnection);
 
 
     <script src="https://d3js.org/d3.v6.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 </head>
 
 <body>
@@ -65,13 +65,43 @@ addStatistic($topic, $procent, $dbConnection);
 
     <section id="form-quiz">
         <section id="form-container">
-            <h1 id="report"><?php echo "you answered $procent procent of the questions correctly with total points: $totalPoints"; ?></h1>
+            <h1 id="report"><?php echo "You answered $procent percent of the questions correctly with total points: $totalPoints"; ?></h1>
         </section>
 
         <button onclick="update(data1)">Data 1</button>
         <button onclick="update(data2)">Data 2</button>
-        <div id="my_dataviz"></div>
+        <!-- <div id="my_dataviz"></div> -->
 
+<!-- Roger's Chart From W3schools animiert [x] und ohne flackern [x] ------ -->
+<canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+<script>
+const yRichtig = <?php echo $procent ?>;
+const yFalsch = 100 - <?= $procent ?>;
+const xValues = ["Richtig", "Falsch"];
+const yValues = [yRichtig, yFalsch];
+const barColors = [
+  "#00ff00",
+  "#ff0000"
+];
+
+new Chart("myChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "Percent"
+    }
+  }
+});
+</script>
+<!-- End of Roger's Chart -->
 
         <h2>Zeitschrift Abbonieren</h2>
         <button id="myBtn">Abbonieren</button>
