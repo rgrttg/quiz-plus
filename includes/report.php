@@ -64,8 +64,8 @@ addStatistic($topic, $procent, $dbConnection);
             const xValues = ["Richtig", "Falsch"];
             const yValues = [yRichtig, yFalsch];
             const barColors = [
-                "#00ff00",
-                "#ff0000"
+                "#6b7280",
+                "#001e3c"
             ];
             
             new Chart("myChart", {
