@@ -4,7 +4,7 @@
 
 
             <li style="display: flex; align-items: center">
-                <a href="">ARAM</a>
+                <a href="../index.php">ARAM</a>
             </li>
         </ul>
         <ul class="hamburger-icon" id="hamburger-icon" style="display: flex">
@@ -13,7 +13,7 @@
         <ul class="navbar-right">
             <li><a href="../index.php">Home</a></li>
             <li><a href="../index.php">Topics</a></li>
-            <li><a href="../index.php">Kontakt</a></li>
+            <li><a href="/includes/report.php">Kontakt</a></li>
         </ul>
     </nav>
 

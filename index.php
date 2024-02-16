@@ -84,14 +84,11 @@ include_once "includes/db.php";
                     <input type="submit" value="tables">
                 </form>
                 <div class="beliebte-themen">
-                    <p class="slogan">Beliebte Themen </p>
+                    <p class="graph-slogan">Beliebte Themen </p>
                     <div id="beliebte-themen-chart">
 
                     </div>
-                    <p>Test Graph</p>
-                    <div class="graph" id="testGraph"></div>
 
-                    <div id="chart"></div>
                 </div>
             </main>
         </div>
@@ -99,7 +96,7 @@ include_once "includes/db.php";
 
 
 
-        <?php include './includes/footer.php'; ?>
+        <?php include './includes/footer.php' ?>
 
         <script src="script.js"></script>
         <script src="navbar.js"></script>
@@ -112,46 +109,7 @@ include_once "includes/db.php";
         <script src="charts.js"></script>
 
 
-        <script>
-            var data = [{
-                x: 0,
-                y: 20
-            }, {
-                x: 1,
-                y: 40
-            }, {
-                x: 2,
-                y: 50
-            }, {
-                x: 3,
-                y: 60
-            }, {
-                x: 4,
-                y: 80
-            }];
-            var width = 400;
-            var height = 400;
 
-            var svg = d3.select("#chart")
-                .append("svg")
-                .attr("width", width)
-                .attr("height", height);
-
-            var line = d3.line()
-                .x(function(d) {
-                    return d.x * 50;
-                })
-                .y(function(d) {
-                    return height - d.y;
-                });
-
-            svg.append("path")
-                .datum(data)
-                .attr("fill", "none")
-                .attr("stroke", "red")
-                .attr("stroke-width", 10)
-                .attr("d", line);
-        </script>
     </div>
 </body>
 

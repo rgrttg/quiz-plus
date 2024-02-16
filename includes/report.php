@@ -39,6 +39,35 @@ if ($procent > 100) {
 $topic = $_SESSION['quiz']['topic'];
 addStatistic($topic, $procent, $dbConnection);
 
+
+
+// fetching data for the graphs
+global $dbConnection;
+
+$query = "SELECT topic AS Topic, repeated AS Anzahl  FROM statistic ORDER BY CONVERT(Anzahl,UNSIGNED) DESC LIMIT 4";
+$sqlStatement = $dbConnection->prepare($query);
+$sqlStatement->execute();
+$row = $sqlStatement->fetchAll(PDO::FETCH_ASSOC);
+// asort($row['Anzahl']);
+var_dump($row[0]['Topic']);
+$fp = fopen('data-beliebte-themen.csv', 'w');
+// write column names
+
+fputcsv($fp, ['Topic', 'Anzahl']);
+// end write columns names
+foreach ($row as $data) {
+    fputcsv($fp, $data);
+}
+
+fclose($fp);
+$keys = array_keys($row[0]);
+
+var_dump($keys);
+
+echo "<pre style='font-size:2rem; color:red;font-weight:900;'";
+var_dump($row);
+echo "</pre>";
+
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +89,10 @@ addStatistic($topic, $procent, $dbConnection);
 </head>
 
 <body>
-    <?php include "header.php"; ?>
-
+    <div class="container">
+        <?php include "header.php"; ?>
+        <div class="main-container">
+            <main>
 
     <section id="form-quiz">
         <section id="form-container">
@@ -104,34 +135,40 @@ addStatistic($topic, $procent, $dbConnection);
         <!-- <div id="my_dataviz"></div> -->
 
 
-        <h2>Zeitschrift Abbonieren</h2>
-        <button id="myBtn">Abbonieren</button>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
+                    <h2>Zeitschrift Abbonieren</h2>
+                    <button id="myBtn">Abbonieren</button>
+                    <div id="myModal" class="modal">
+                        <div class="modal-content">
 
-                <span class="close">&times;</span>
-                <form class="start-quiz" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                    <label style="color: black;" for="name">name</label>
-                    <input type="text" name="name" id="name">
-                    <label style="color: black;" for="name">e-mail</label>
-                    <input type="email" name="email">
-                    <span class="error"> <?php if (!empty($emailErr)) {
-                                                echo $emailErr;
-                                            } else {
-                                                echo "";
-                                            }; ?></span>
-                    <br><br>
-                    <input type="submit" name="submit" value="Abbonieren">
-                </form>
-            </div>
+                            <span class="close">&times;</span>
+                            <form class="start-quiz" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                <label style="color: black;" for="name">name</label>
+                                <input type="text" name="name" id="name">
+                                <label style="color: black;" for="name">e-mail</label>
+                                <input type="email" name="email">
+                                <span class="error"> <?php if (!empty($emailErr)) {
+                                                            echo $emailErr;
+                                                        } else {
+                                                            echo "";
+                                                        }; ?></span>
+                                <br><br>
+                                <input type="submit" name="submit" value="Abbonieren">
+                            </form>
+                        </div>
 
+                    </div>
+
+                </section>
+            </main>
         </div>
+        <?php include "footer.php" ?>
 
-    </section>
-
-    <?php include "footer.php" ?>
+    </div>
     <script src="../script.js"></script>
     <script src="../pie.js"></script>
+
+
+
 </body>
 
 </html>
